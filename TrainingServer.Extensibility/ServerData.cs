@@ -76,7 +76,12 @@ namespace TrainingServer
 
 	public interface IServer
 	{
+		/// <summary>Spawns an <see cref="IAircraft"/> from the given parameters.</summary>
+		/// <returns>The <see cref="IAircraft"/> if it was successfully added to the server, else <see langword="null"/>.</returns>
 		IAircraft? SpawnAircraft(string callsign, Flightplan flightplan, Coordinate startingPosition, float startingCourse, uint startingSpeed, int startingAltitude);
+		/// <summary>Spawns an <see cref="IAircraft"/> from its JSON representation.</summary>
+		/// <returns>The <see cref="IAircraft"/> if it was successfully added to the server, else <see langword="null"/>.</returns>
+		IAircraft? SpawnAircraft(string acJson);
 	}
 
 	public struct Coordinate
