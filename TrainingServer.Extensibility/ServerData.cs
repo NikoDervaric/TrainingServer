@@ -2,6 +2,7 @@
 
 namespace TrainingServer
 {
+
 	public interface IAircraft
 	{
 		/// <summary>The network callsign of <see langword="this"/> <see cref="IAircraft"/>.</summary>
@@ -30,12 +31,12 @@ namespace TrainingServer
 		/// <summary>Turns to face a certain course.</summary>
 		/// <param name="trueCourse">The course in degrees true to turn to.</param>
 		/// <param name="turnRate">The turn rate in degrees per second.</param>
-		void TurnCourse(float trueCourse, float turnRate = 3f);
+		void TurnCourse(float trueCourse, float turnRate = 3f, TurnDirection? turnDirection = null);
 
 		/// <summary>Flies to a given <see cref="Coordinate"/>.</summary>
 		/// <param name="destination">The <see cref="Coordinate"/> to fly to.</param>
 		/// <param name="turnRate">The turn rate in degrees per second.</param>
-		void FlyDirect(Coordinate destination, float turnRate = 3f);
+		void FlyDirect(Coordinate destination, float turnRate = 3f, TurnDirection? turnDirection = null);
 
 		/// <summary>Flies a given distance along the present course.</summary>
 		/// <param name="distance">The distance in nautical miles to fly.</param>
@@ -65,8 +66,12 @@ namespace TrainingServer
 		/// <param name="acceleration">The acceleration/deceleration rate in kts per second.</param>
 		void RestrictSpeed(uint minimum, uint maximum, float acceleration);
 
-		/// <summary>Immediately disconnects the aircraft.</summary>
+		/// <summary>Immediately disconnects <see langword="this"/> <see cref="IAircraft"/>.</summary>
 		void Kill();
+
+		/// <summary>Returns a JSON representation of <see langword="this"/> <see cref="IAircraft"/>.</summary>
+		/// <returns></returns>
+		string ToJson();
 	}
 
 	public interface IServer
@@ -102,5 +107,11 @@ namespace TrainingServer
 		public Flightplan(char flightRules, char typeOfFlight, string aircraftType, string cruiseSpeed, string departureAirport, DateTime estimatedDeparture, DateTime actualDeparture, string cruiseAlt, string arrivalAirport, uint hoursEnRoute, uint minutesEnRoute, uint hoursFuel, uint minutesFuel, string alternateAirport, string remarks, string route) =>
 			(FlightRules, TypeOfFlight, AircraftType, CruiseSpeed, DepartureAirport, EstimatedDeparture, ActualDeparture, CruiseAlt, ArrivalAirport, HoursEnRoute, MinutesEnRoute, HoursFuel, MinutesFuel, AlternateAirport, Remarks, Route) =
 			(flightRules, typeOfFlight, aircraftType, cruiseSpeed, departureAirport, estimatedDeparture, actualDeparture, cruiseAlt, arrivalAirport, hoursEnRoute, minutesEnRoute, hoursFuel, minutesFuel, alternateAirport, remarks, route);
+	}
+
+	public enum TurnDirection
+	{
+		Left,
+		Right
 	}
 }
